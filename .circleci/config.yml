@@ -1,18 +1,19 @@
-version: 2.1
-
+version: '2.1'
 orbs:
-  aws-ecr: circleci/aws-ecr@6.7.0
-
+  aws-ecr: aws-ecr: circleci/aws-ecr@8.1.3
 workflows:
   build_and_push_image:
     jobs:
       - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWSAccessKeyId
+          aws-cli-version: latest
           aws-secret-access-key: AWSSecretKey
           create-repo: true
           dockerfile: Dockerfile
+          executor: aws-ecr/default
           path: .
+          platform: linux/amd64
+          public-registry: false
+          push-image: true
           region: AWS_REGION
           repo: catherinepope
-          tag: "$CIRCLE_SHA1"
